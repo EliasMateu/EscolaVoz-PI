@@ -11,7 +11,14 @@
             to="/admin/categories" 
             class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
           >
-            Gerenciar Categorias
+            Categorias
+          </NuxtLink>
+          <NuxtLink 
+            v-if="user?.role === 'SEDUC' || user?.role === 'DIRECTORY'"
+            to="/admin/kanban" 
+            class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
+          >
+            Kanban
           </NuxtLink>
           <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
             {{ t('back') }}
