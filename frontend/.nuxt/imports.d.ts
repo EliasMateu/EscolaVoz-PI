@@ -34,6 +34,7 @@ export { useAuthStore } from '../composables/useAuth';
 export { useCategoryStore, Category } from '../composables/useCategories';
 export { useDashboardStore } from '../composables/useDashboard';
 export { useDemandStore } from '../composables/useDemands';
+export { useSchoolStore, School } from '../composables/useSchools';
 export { useThemeStore, translations, useTrans, Theme, Locale } from '../composables/useTheme';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

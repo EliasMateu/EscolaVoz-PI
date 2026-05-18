@@ -14,6 +14,12 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 
+export const AppBadge: typeof import("../components/AppBadge.vue")['default']
+export const AppButton: typeof import("../components/AppButton.vue")['default']
+export const AppCard: typeof import("../components/AppCard.vue")['default']
+export const AppInput: typeof import("../components/AppInput.vue")['default']
+export const AppSelect: typeof import("../components/AppSelect.vue")['default']
+export const KanbanFilters: typeof import("../components/KanbanFilters.vue")['default']
 export const LocaleToggle: typeof import("../components/LocaleToggle.vue")['default']
 export const ThemeToggle: typeof import("../components/ThemeToggle.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
@@ -39,6 +45,12 @@ export const Head: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
+export const LazyAppBadge: LazyComponent<typeof import("../components/AppBadge.vue")['default']>
+export const LazyAppButton: LazyComponent<typeof import("../components/AppButton.vue")['default']>
+export const LazyAppCard: LazyComponent<typeof import("../components/AppCard.vue")['default']>
+export const LazyAppInput: LazyComponent<typeof import("../components/AppInput.vue")['default']>
+export const LazyAppSelect: LazyComponent<typeof import("../components/AppSelect.vue")['default']>
+export const LazyKanbanFilters: LazyComponent<typeof import("../components/KanbanFilters.vue")['default']>
 export const LazyLocaleToggle: LazyComponent<typeof import("../components/LocaleToggle.vue")['default']>
 export const LazyThemeToggle: LazyComponent<typeof import("../components/ThemeToggle.vue")['default']>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>

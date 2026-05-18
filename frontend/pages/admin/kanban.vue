@@ -1,28 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-      <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between">
-          <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Kanban de Demandas</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Visualize e gerencie as demandas por status</p>
-          </div>
-          <div class="flex items-center gap-3">
-            <LocaleToggle />
-            <ThemeToggle />
-          </div>
-        </div>
-      </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
-        <div class="flex flex-wrap items-center gap-3">
-          <NuxtLink 
-            to="/dashboard" 
-            class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-          >
-            <svg class="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Dashboard
+  <div>
+    <div class="mb-6">
           </NuxtLink>
           <NuxtLink 
             to="/admin" 
@@ -316,10 +294,7 @@
             </p>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</template>
+      </template>
 
 <script setup lang="ts">
 import { useThemeStore, translations } from '~/composables/useTheme'
@@ -328,7 +303,7 @@ import type { School } from '~/composables/useSchools'
 import type { Category } from '~/composables/useCategories'
 
 definePageMeta({
-  layout: false
+  layout: 'dashboard'
 })
 
 const demandStore = useDemandStore()

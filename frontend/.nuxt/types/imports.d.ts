@@ -135,6 +135,7 @@ declare global {
   const useRouter: typeof import('../../node_modules/nuxt/dist/app/composables/router').useRouter
   const useRuntimeConfig: typeof import('../../node_modules/nuxt/dist/app/nuxt').useRuntimeConfig
   const useRuntimeHook: typeof import('../../node_modules/nuxt/dist/app/composables/runtime-hook').useRuntimeHook
+  const useSchoolStore: typeof import('../../composables/useSchools').useSchoolStore
   const useScript: typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs').useScript
   const useScriptAhrefsAnalytics: typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs').useScriptAhrefsAnalytics
   const useScriptBingUet: typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs').useScriptBingUet
@@ -207,6 +208,9 @@ declare global {
   // @ts-ignore
   export type { Category } from '../../composables/useCategories'
   import('../../composables/useCategories')
+  // @ts-ignore
+  export type { School } from '../../composables/useSchools'
+  import('../../composables/useSchools')
   // @ts-ignore
   export type { Theme, Locale } from '../../composables/useTheme'
   import('../../composables/useTheme')
@@ -349,6 +353,7 @@ declare module 'vue' {
     readonly useRouter: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/router')['useRouter']>
     readonly useRuntimeConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['useRuntimeConfig']>
     readonly useRuntimeHook: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/runtime-hook')['useRuntimeHook']>
+    readonly useSchoolStore: UnwrapRef<typeof import('../../composables/useSchools')['useSchoolStore']>
     readonly useScript: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs')['useScript']>
     readonly useScriptAhrefsAnalytics: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs')['useScriptAhrefsAnalytics']>
     readonly useScriptBingUet: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs')['useScriptBingUet']>

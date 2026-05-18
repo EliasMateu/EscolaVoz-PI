@@ -1,33 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <header class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('dashboard') }}</h1>
-        <div class="flex items-center space-x-4">
-          <LocaleToggle />
-          <ThemeToggle />
-          <NuxtLink 
-            v-if="user?.role === 'SEDUC' || user?.role === 'DIRECTORY'" 
-            to="/admin" 
-            class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
-          >
-            Dashboard Admin
-          </NuxtLink>
-          <span class="text-gray-700 dark:text-gray-300">{{ user?.first_name }} {{ user?.last_name }}</span>
-          <span class="px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">{{ user?.role }}</span>
-          <button 
-            @click="handleLogout"
-            class="text-sm text-red-600 hover:text-red-800 dark:text-red-400"
-          >
-            {{ t('logout') }}
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <div class="px-4 py-6 sm:px-0">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
@@ -138,12 +111,16 @@
           {{ t('school') }}: <strong>{{ user.school_name }}</strong>
         </div>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useThemeStore, translations } from '~/composables/useTheme'
+
+definePageMeta({
+  layout: 'dashboard'
+})
 
 const auth = useAuthStore()
 const demandStore = useDemandStore()
