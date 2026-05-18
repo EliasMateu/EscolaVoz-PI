@@ -24,7 +24,12 @@
     </div>
 
     <div v-else class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+      <div 
+        class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
+        @dragover.prevent
+        @dragenter.prevent
+        @drop="handleDrop('PENDING')"
+      >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
@@ -35,7 +40,16 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div v-for="demand in pendingDemands" :key="demand.id" class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200" @click="openDetail(demand)">
+          <div 
+            v-for="demand in pendingDemands" 
+            :key="demand.id" 
+            class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
+            :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
+            draggable="true"
+            @dragstart="handleDragStart(demand)"
+            @dragend="handleDragEnd"
+            @click="openDetail(demand)"
+          >
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1">{{ demand.title }}</div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">{{ demand.description || 'Sem descrição' }}</p>
             <div class="flex items-center justify-between text-xs">
@@ -47,7 +61,12 @@
         </div>
       </div>
 
-      <div class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+      <div 
+        class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
+        @dragover.prevent
+        @dragenter.prevent
+        @drop="handleDrop('IN_PROGRESS')"
+      >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
@@ -58,7 +77,16 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div v-for="demand in inProgressDemands" :key="demand.id" class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200" @click="openDetail(demand)">
+          <div 
+            v-for="demand in inProgressDemands" 
+            :key="demand.id" 
+            class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
+            :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
+            draggable="true"
+            @dragstart="handleDragStart(demand)"
+            @dragend="handleDragEnd"
+            @click="openDetail(demand)"
+          >
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1">{{ demand.title }}</div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">{{ demand.description || 'Sem descrição' }}</p>
             <div class="flex items-center justify-between text-xs">
@@ -70,7 +98,12 @@
         </div>
       </div>
 
-      <div class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+      <div 
+        class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
+        @dragover.prevent
+        @dragenter.prevent
+        @drop="handleDrop('COMPLETED')"
+      >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <span class="w-3 h-3 bg-green-500 rounded-full"></span>
@@ -81,7 +114,16 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div v-for="demand in completedDemands" :key="demand.id" class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200" @click="openDetail(demand)">
+          <div 
+            v-for="demand in completedDemands" 
+            :key="demand.id" 
+            class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
+            :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
+            draggable="true"
+            @dragstart="handleDragStart(demand)"
+            @dragend="handleDragEnd"
+            @click="openDetail(demand)"
+          >
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1">{{ demand.title }}</div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">{{ demand.description || 'Sem descrição' }}</p>
             <div class="flex items-center justify-between text-xs">
@@ -93,7 +135,12 @@
         </div>
       </div>
 
-      <div class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+      <div 
+        class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
+        @dragover.prevent
+        @dragenter.prevent
+        @drop="handleDrop('REJECTED')"
+      >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <span class="w-3 h-3 bg-red-500 rounded-full"></span>
@@ -104,7 +151,16 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div v-for="demand in rejectedDemands" :key="demand.id" class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200" @click="openDetail(demand)">
+          <div 
+            v-for="demand in rejectedDemands" 
+            :key="demand.id" 
+            class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
+            :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
+            draggable="true"
+            @dragstart="handleDragStart(demand)"
+            @dragend="handleDragEnd"
+            @click="openDetail(demand)"
+          >
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1">{{ demand.title }}</div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">{{ demand.description || 'Sem descrição' }}</p>
             <div class="flex items-center justify-between text-xs">
@@ -180,8 +236,21 @@ const isLoading = computed(() => demandStore.isLoading)
 const selectedDemand = ref<Demand | null>(null)
 const filters = reactive({ school: '', priority: '', category: '', date_from: '', date_to: '' })
 
-const schools = computed(() => schoolStore.schools)
-const categories = computed(() => categoryStore.categories)
+const schools = computed(() => {
+  const data = schoolStore.schools
+  if (!data) return []
+  if (Array.isArray(data)) return data
+  if (data?.results) return data.results
+  return []
+})
+
+const categories = computed(() => {
+  const data = categoryStore.categories
+  if (!data) return []
+  if (Array.isArray(data)) return data
+  if (data?.results) return data.results
+  return []
+})
 const allDemands = computed(() => demandStore.demands)
 
 const filteredDemands = computed(() => {
@@ -213,7 +282,34 @@ const handleFilterChange = (newFilters: typeof filters) => {
   Object.assign(filters, newFilters)
 }
 
-const openDetail = (demand: Demand) => { selectedDemand.value = demand }
+const openDetail = (demand: Demand) => { navigateTo(`/demands/${demand.id}`) }
+
+const draggedDemand = ref<Demand | null>(null)
+const isUpdatingStatus = ref(false)
+
+const handleDragStart = (demand: Demand) => {
+  draggedDemand.value = demand
+}
+
+const handleDragEnd = () => {
+  draggedDemand.value = null
+}
+
+const handleDrop = async (newStatus: string) => {
+  if (!draggedDemand.value || isUpdatingStatus.value) return
+  if (draggedDemand.value.status === newStatus) return
+
+  isUpdatingStatus.value = true
+  
+  const result = await demandStore.updateDemand(draggedDemand.value.id, { status: newStatus })
+  
+  if (result.success) {
+    await demandStore.fetchDemands()
+  }
+  
+  draggedDemand.value = null
+  isUpdatingStatus.value = false
+}
 
 const formatDate = (date: string) => new Date(date).toLocaleDateString('pt-BR')
 

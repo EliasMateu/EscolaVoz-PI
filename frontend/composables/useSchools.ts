@@ -7,6 +7,13 @@ export interface School {
   address?: string
 }
 
+interface PaginatedResponse {
+  count: number
+  next: string | null
+  previous: string | null
+  results: School[]
+}
+
 export const useSchoolStore = defineStore('schools', {
   state: () => ({
     schools: [] as School[],
@@ -17,10 +24,11 @@ export const useSchoolStore = defineStore('schools', {
     async fetchSchools() {
       const config = useRuntimeConfig()
       try {
-        const response = await $fetch<School[]>(`${config.public.apiBase}/schools/`)
-        this.schools = response
+        const response = await $fetch<PaginatedResponse | School[]>(`${config.public.apiBase}/schools/`)
+        this.schools = Array.isArray(response) ? response : response.results || []
       } catch (error) {
         console.error('Error fetching schools:', error)
+        this.schools = []
       }
     },
   },

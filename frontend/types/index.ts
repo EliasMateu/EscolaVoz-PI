@@ -51,6 +51,8 @@ export interface Demand {
   created_by_name: string
   status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'REJECTED'
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+  image: string | null
+  image_url: string | null
   created_at: string
   updated_at: string
   resolved_at: string | null
@@ -61,4 +63,5 @@ export interface CreateDemandData {
   description: string
   category: string
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+  image?: File | null
 }

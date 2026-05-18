@@ -35,7 +35,7 @@
               </select>
             </div>
 
-            <div>
+            <div v-if="isAdmin">
               <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('priority') }}</label>
               <select 
                 id="priority" 
@@ -62,6 +62,40 @@
                 placeholder="Descreva os detalhes da demanda..."
               ></textarea>
             </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Imagem (opcional)
+              </label>
+              <div class="mt-1 flex items-center gap-4">
+                <div v-if="imagePreview" class="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
+                  <img :src="imagePreview" alt="Preview" class="w-full h-full object-cover">
+                  <button 
+                    type="button"
+                    @click="removeImage"
+                    class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                  >
+                    ×
+                  </button>
+                </div>
+                <label 
+                  for="image-upload"
+                  class="cursor-pointer px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  Selecionar imagem
+                </label>
+                <input 
+                  id="image-upload" 
+                  type="file"
+                  accept="image/*"
+                  class="hidden"
+                  @change="handleImageChange"
+                >
+              </div>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Formatos: JPG, PNG, GIF. Tamanho máximo: 5MB
+              </p>
+            </div>
           </div>
 
           <div class="mt-6 flex justify-end">
@@ -87,21 +121,47 @@ definePageMeta({
 })
 
 const demandStore = useDemandStore()
+const auth = useAuthStore()
 const router = useRouter()
 const store = useThemeStore()
 
 const t = (key: string) => translations[store.locale][key as keyof typeof translations['pt-BR']] || key
+
+const isAdmin = computed(() => {
+  return auth.user?.role === 'SEDUC' || auth.user?.role === 'DIRECTORY'
+})
 
 const form = reactive({
   title: '',
   description: '',
   category: '',
   priority: 'MEDIUM' as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT',
+  image: null as File | null,
 })
 
+const imagePreview = ref<string | null>(null)
 const error = ref('')
 const isLoading = computed(() => demandStore.isLoading)
 const categories = computed(() => demandStore.categories)
+
+const handleImageChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  
+  if (file) {
+    if (file.size > 5 * 1024 * 1024) {
+      error.value = 'A imagem deve ter no máximo 5MB'
+      return
+    }
+    form.image = file
+    imagePreview.value = URL.createObjectURL(file)
+  }
+}
+
+const removeImage = () => {
+  form.image = null
+  imagePreview.value = null
+}
 
 onMounted(() => {
   store.initTheme()

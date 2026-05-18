@@ -7,6 +7,13 @@ export interface Category {
   is_active: boolean
 }
 
+interface PaginatedResponse {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Category[]
+}
+
 export const useCategoryStore = defineStore('categories', {
   state: () => ({
     categories: [] as Category[],
@@ -17,10 +24,11 @@ export const useCategoryStore = defineStore('categories', {
     async fetchCategories() {
       const config = useRuntimeConfig()
       try {
-        const response = await $fetch<Category[]>(`${config.public.apiBase}/categories/`)
-        this.categories = response
+        const response = await $fetch<PaginatedResponse | Category[]>(`${config.public.apiBase}/categories/`)
+        this.categories = Array.isArray(response) ? response : response.results || []
       } catch (error) {
         console.error('Error fetching categories:', error)
+        this.categories = []
       }
     },
 

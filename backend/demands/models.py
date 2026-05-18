@@ -51,6 +51,12 @@ class Demand(models.Model):
         default=DemandPriority.MEDIUM,
         verbose_name='Prioridade'
     )
+    image = models.ImageField(
+        upload_to='demands/%Y/%m/',
+        blank=True,
+        null=True,
+        verbose_name='Imagem'
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

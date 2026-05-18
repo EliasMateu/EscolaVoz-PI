@@ -1,5 +1,6 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
       <div class="p-5">
         <div class="flex items-center">
@@ -73,7 +74,8 @@
           {{ t('noDemands') }}
         </div>
         <ul v-else class="divide-y divide-gray-200 dark:divide-gray-700">
-          <li v-for="demand in demands" :key="demand.id" class="px-4 py-4 sm:px-6">
+          <li v-for="demand in demands" :key="demand.id" class="px-4 py-4 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+            <NuxtLink :to="`/demands/${demand.id}`" class="block">
             <div class="flex items-center justify-between">
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-primary-600 dark:text-primary-400 truncate">
@@ -100,6 +102,7 @@
                 {{ formatDate(demand.created_at) }}
               </div>
             </div>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -108,6 +111,7 @@
 
   <div v-if="user?.school_name" class="mt-4 text-sm text-gray-600 dark:text-gray-400">
     {{ t('school') }}: <strong>{{ user.school_name }}</strong>
+  </div>
   </div>
 </template>
 

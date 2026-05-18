@@ -6,7 +6,7 @@
         class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm py-2 px-3 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
       >
         <option value="">Todas as escolas</option>
-        <option v-for="school in schools" :key="school.code" :value="school.code">
+        <option v-for="school in schoolsList" :key="school.code" :value="school.code">
           {{ school.name }}
         </option>
       </select>
@@ -31,7 +31,7 @@
         class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm py-2 px-3 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
       >
         <option value="">Todas as categorias</option>
-        <option v-for="cat in categories" :key="cat.id" :value="cat.id">
+        <option v-for="cat in categoriesList" :key="cat.id" :value="cat.id">
           {{ cat.name }}
         </option>
       </select>
@@ -65,8 +65,16 @@
 </template>
 
 <script setup lang="ts">
-import type { School } from '~/composables/useSchools'
-import type { Category } from '~/composables/useCategories'
+interface School {
+  id: number
+  name: string
+  code: string
+}
+
+interface Category {
+  id: number
+  name: string
+}
 
 interface Filters {
   school: string
@@ -77,13 +85,27 @@ interface Filters {
 }
 
 const props = defineProps<{
-  schools: School[]
-  categories: Category[]
+  schools: any
+  categories: any
 }>()
 
 const emit = defineEmits<{
   (e: 'update:filters', filters: Filters): void
 }>()
+
+const schoolsList = computed(() => {
+  if (!props.schools) return []
+  if (Array.isArray(props.schools)) return props.schools
+  if (props.schools && props.schools.results) return props.schools.results
+  return []
+})
+
+const categoriesList = computed(() => {
+  if (!props.categories) return []
+  if (Array.isArray(props.categories)) return props.categories
+  if (props.categories && props.categories.results) return props.categories.results
+  return []
+})
 
 const localFilters = reactive<Filters>({
   school: '',
