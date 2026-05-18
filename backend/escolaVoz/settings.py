@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'schools',
     'categories',
     'demands',
+    'dashboard',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

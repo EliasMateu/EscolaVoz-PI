@@ -8,5 +8,6 @@ urlpatterns = [
     path('api/schools/', include('schools.urls')),
     path('api/categories/', include('categories.urls')),
     path('api/demands/', include('demands.urls')),
+    path('api/dashboard/', include('dashboard.urls')),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
