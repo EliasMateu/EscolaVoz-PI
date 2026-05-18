@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'accounts',
     'schools',
+    'categories',
+    'demands',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
