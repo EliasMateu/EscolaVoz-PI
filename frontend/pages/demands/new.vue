@@ -1,41 +1,45 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <header class="bg-white shadow">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+    <header class="bg-white dark:bg-gray-800 shadow">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900">Nova Demanda</h1>
-        <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900">
-          Voltar
-        </NuxtLink>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('newDemand') }}</h1>
+        <div class="flex items-center gap-3">
+          <LocaleToggle />
+          <ThemeToggle />
+          <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+            {{ t('back') }}
+          </NuxtLink>
+        </div>
       </div>
     </header>
 
     <main class="max-w-3xl mx-auto py-6 sm:px-6 lg:px-8">
-      <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+      <div class="bg-white dark:bg-gray-800 shadow px-4 py-5 sm:rounded-lg sm:p-6">
         <form @submit.prevent="handleSubmit">
-          <div v-if="error" class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          <div v-if="error" class="mb-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded">
             {{ error }}
           </div>
 
           <div class="space-y-6">
             <div>
-              <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+              <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('title') }}</label>
               <input 
                 id="title" 
                 v-model="form.title"
                 type="text" 
                 required 
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Resumo da demanda"
               >
             </div>
 
             <div>
-              <label for="category" class="block text-sm font-medium text-gray-700">Categoria</label>
+              <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('categories') }}</label>
               <select 
                 id="category" 
                 v-model="form.category"
                 required 
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">Selecione uma categoria</option>
                 <option v-for="cat in categories" :key="cat.id" :value="cat.id">
@@ -45,29 +49,29 @@
             </div>
 
             <div>
-              <label for="priority" class="block text-sm font-medium text-gray-700">Prioridade</label>
+              <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('priority') }}</label>
               <select 
                 id="priority" 
                 v-model="form.priority"
                 required 
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
-                <option value="LOW">Baixa</option>
-                <option value="MEDIUM">Média</option>
-                <option value="HIGH">Alta</option>
-                <option value="URGENT">Urgente</option>
+                <option value="LOW">{{ t('low') }}</option>
+                <option value="MEDIUM">{{ t('medium') }}</option>
+                <option value="HIGH">{{ t('high') }}</option>
+                <option value="URGENT">{{ t('urgent') }}</option>
               </select>
             </div>
 
             <div>
-              <label for="description" class="block text-sm font-medium text-gray-700">
-                Descrição
+              <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                {{ t('description') }}
               </label>
               <textarea 
                 id="description" 
                 v-model="form.description"
                 rows="4" 
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Descreva os detalhes da demanda..."
               ></textarea>
             </div>
@@ -79,7 +83,7 @@
               :disabled="isLoading"
               class="bg-primary-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
             >
-              {{ isLoading ? 'Enviando...' : 'Enviar Demanda' }}
+              {{ isLoading ? 'Enviando...' : t('save') }}
             </button>
           </div>
         </form>
@@ -89,12 +93,17 @@
 </template>
 
 <script setup lang="ts">
+import { useThemeStore, translations } from '~/composables/useTheme'
+
 definePageMeta({
   layout: false
 })
 
 const demandStore = useDemandStore()
 const router = useRouter()
+const store = useThemeStore()
+
+const t = (key: string) => translations[store.locale][key as keyof typeof translations['pt-BR']] || key
 
 const form = reactive({
   title: '',
@@ -108,6 +117,7 @@ const isLoading = computed(() => demandStore.isLoading)
 const categories = computed(() => demandStore.categories)
 
 onMounted(() => {
+  store.initTheme()
   demandStore.fetchCategories()
 })
 

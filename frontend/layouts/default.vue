@@ -1,8 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+  <div class="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+    <slot />
   </div>
 </template>
 
@@ -13,9 +11,5 @@ const store = useThemeStore()
 
 onMounted(() => {
   store.initTheme()
-})
-
-useHead({
-  title: 'EscolaVoz',
 })
 </script>
