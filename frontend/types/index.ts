@@ -31,3 +31,34 @@ export interface RegisterData {
   password_confirm: string
   school_code: string
 }
+
+export interface Category {
+  id: string
+  name: string
+  description: string
+  is_active: boolean
+}
+
+export interface Demand {
+  id: string
+  title: string
+  description: string
+  category: string
+  category_name: string
+  school: string
+  school_name: string
+  created_by: string
+  created_by_name: string
+  status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'REJECTED'
+  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+  created_at: string
+  updated_at: string
+  resolved_at: string | null
+}
+
+export interface CreateDemandData {
+  title: string
+  description: string
+  category: string
+  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+}
