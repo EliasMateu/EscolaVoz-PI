@@ -1,100 +1,100 @@
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import permissions
-from django.db.models import Count
-from django.http import HttpResponse
-import csv
-from io import StringIO
-
+from django.db.models import Count, Sum
 from demands.models import Demand
 from schools.models import School
 from categories.models import Category
 
 
-class IsAdminOrDirectory(permissions.BasePermission):
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role in ['DIRECTORY', 'SEDUC']
-
-
 class DashboardStatsView(APIView):
-    permission_classes = [IsAdminOrDirectory]
-
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
-        demands = Demand.objects.all()
+        user = request.user
+        
+        if user.role in ['DIRECTORY', 'SEDUC']:
+            demands = Demand.objects.all()
+        else:
+            demands = Demand.objects.filter(school=user.school)
         
         total = demands.count()
         pending = demands.filter(status='PENDING').count()
         in_progress = demands.filter(status='IN_PROGRESS').count()
         completed = demands.filter(status='COMPLETED').count()
         rejected = demands.filter(status='REJECTED').count()
-
-        by_priority = demands.values('priority').annotate(count=Count('id'))
         
         return Response({
             'total': total,
-            'by_status': {
-                'pending': pending,
-                'in_progress': in_progress,
-                'completed': completed,
-                'rejected': rejected,
-            },
-            'by_priority': {item['priority']: item['count'] for item in by_priority},
+            'pending': pending,
+            'in_progress': in_progress,
+            'completed': completed,
+            'rejected': rejected
         })
 
 
 class DashboardByCategoryView(APIView):
-    permission_classes = [IsAdminOrDirectory]
-
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
-        by_category = Demand.objects.values('category__name').annotate(count=Count('id'))
+        user = request.user
         
-        return Response({
-            'by_category': [{'category': item['category__name'], 'count': item['count']} for item in by_category]
-        })
+        if user.role in ['DIRECTORY', 'SEDUC']:
+            demands = Demand.objects.all()
+        else:
+            demands = Demand.objects.filter(school=user.school)
+        
+        data = demands.values('category__name').annotate(count=Count('id'))
+        
+        return Response({item['category__name'] or 'Sem categoria': item['count'] for item in data})
 
 
 class DashboardBySchoolView(APIView):
-    permission_classes = [IsAdminOrDirectory]
-
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
-        by_school = Demand.objects.values('school__name').annotate(count=Count('id'))
+        user = request.user
         
-        return Response({
-            'by_school': [{'school': item['school__name'], 'count': item['count']} for item in by_school]
-        })
+        if user.role in ['DIRECTORY', 'SEDUC']:
+            demands = Demand.objects.all()
+        else:
+            return Response({'error': 'Acesso restrito'}, status=403)
+        
+        data = demands.values('school__name').annotate(count=Count('id'))
+        
+        return Response({item['school__name']: item['count'] for item in data})
 
 
 class DashboardExportView(APIView):
-    permission_classes = [IsAdminOrDirectory]
-
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
+        user = request.user
+        
+        if user.role not in ['DIRECTORY', 'SEDUC']:
+            return Response({'error': 'Acesso restrito'}, status=403)
+        
         demands = Demand.objects.all().select_related('category', 'school', 'created_by')
         
-        output = StringIO()
+        import csv
+        import io
+        from django.http import HttpResponse
+        
+        output = io.StringIO()
         writer = csv.writer(output)
         
-        writer.writerow([
-            'ID', 'Título', 'Descrição', 'Categoria', 'Escola',
-            'Criado por', 'Status', 'Prioridade', 'Data criação', 'Data resolução'
-        ])
+        writer.writerow(['ID', 'Título', 'Categoria', 'Escola', 'Status', 'Prioridade', 'Criado por', 'Data Criação'])
         
         for d in demands:
             writer.writerow([
                 str(d.id),
                 d.title,
-                d.description or '',
-                d.category.name,
-                d.school.name,
-                d.created_by.get_full_name() or d.created_by.email,
+                d.category.name if d.category else '',
+                d.school.name if d.school else '',
                 d.status,
                 d.priority,
-                d.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                d.resolved_at.strftime('%Y-%m-%d %H:%M:%S') if d.resolved_at else '',
+                d.created_by.get_full_name() if d.created_by else '',
+                d.created_at.strftime('%Y-%m-%d %H:%M')
             ])
         
-        output.seek(0)
-        
-        response = HttpResponse(output.getvalue(), content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="demandas.csv"'
-        
-        return response
+        return Response({'csv': output.getvalue()})
