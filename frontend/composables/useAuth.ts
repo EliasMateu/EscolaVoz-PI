@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import type { User, AuthResponse, LoginData, RegisterData } from '~/types'
 
-const api = useRuntimeConfig().public.apiBase
-
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null as User | null,
@@ -15,13 +13,14 @@ export const useAuthStore = defineStore('auth', {
     isAuthenticated: (state) => !!state.accessToken && !!state.user,
     userRole: (state) => state.user?.role || null,
     userSchool: (state) => state.user?.school || null,
+    apiBase: () => useRuntimeConfig().public.apiBase,
   },
 
   actions: {
     async login(credentials: LoginData) {
       this.isLoading = true
       try {
-        const response = await $fetch<AuthResponse>(`${api}/auth/login/`, {
+        const response = await $fetch<AuthResponse>(`${this.apiBase}/auth/login/`, {
           method: 'POST',
           body: credentials,
         })
@@ -47,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
     async register(data: RegisterData) {
       this.isLoading = true
       try {
-        const response = await $fetch<AuthResponse>(`${api}/auth/register/`, {
+        const response = await $fetch<AuthResponse>(`${this.apiBase}/auth/register/`, {
           method: 'POST',
           body: data,
         })
@@ -76,7 +75,7 @@ export const useAuthStore = defineStore('auth', {
       if (!this.refreshToken) return false
 
       try {
-        const response = await $fetch<{ access: string }>(`${api}/auth/refresh/`, {
+        const response = await $fetch<{ access: string }>(`${this.apiBase}/auth/refresh/`, {
           method: 'POST',
           body: { refresh: this.refreshToken },
         })
@@ -94,7 +93,7 @@ export const useAuthStore = defineStore('auth', {
       if (!this.accessToken) return
 
       try {
-        const response = await $fetch<User>(`${api}/auth/me/`, {
+        const response = await $fetch<User>(`${this.apiBase}/auth/me/`, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
