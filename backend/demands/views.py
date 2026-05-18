@@ -1,9 +1,12 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny
+from django.http import HttpResponse
 from django.db.models import Q
 
-from .models import Demand
+from .models import Demand, DemandAttachment
 from .serializers import DemandSerializer, DemandCreateSerializer, DemandUpdateSerializer
 
 
@@ -37,3 +40,17 @@ class DemandViewSet(viewsets.ModelViewSet):
         demand.resolved_at = timezone.now()
         demand.save()
         return Response(DemandSerializer(demand).data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def serve_attachment(request, attachment_id):
+    """Serve attachment from database storage"""
+    try:
+        attachment = DemandAttachment.objects.get(id=attachment_id)
+        return HttpResponse(
+            attachment.file_data,
+            content_type=attachment.content_type
+        )
+    except DemandAttachment.DoesNotExist:
+        return HttpResponse(status=404)

@@ -69,3 +69,36 @@ class Demand(models.Model):
 
     def __str__(self):
         return f'{self.title} - {self.school.name}'
+
+
+class DemandAttachment(models.Model):
+    """Model to store file attachments in database"""
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    demand = models.ForeignKey(
+        Demand,
+        on_delete=models.CASCADE,
+        related_name='attachments',
+        null=True,
+        blank=True
+    )
+    file_name = models.CharField(max_length=255)
+    file_data = models.TextField()
+    content_type = models.CharField(max_length=100)
+    file_size = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name = 'Anexo'
+        verbose_name_plural = 'Anexos'
+    
+    def __str__(self):
+        return self.file_name
+    
+    @property
+    def is_image(self):
+        return self.content_type.startswith('image/')
+    
+    @property
+    def data_url(self):
+        return f"data:{self.content_type};base64,{self.file_data}"

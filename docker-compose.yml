@@ -43,6 +43,19 @@ services:
       - JWT_SECRET_KEY=${JWT_SECRET_KEY:-jwt-secret-change-me}
       - JWT_ACCESS_TOKEN_LIFETIME=${JWT_ACCESS_TOKEN_LIFETIME:-60}
       - JWT_REFRESH_TOKEN_LIFETIME=${JWT_REFRESH_TOKEN_LIFETIME:-1440}
+      # Storage configuration
+      - STORAGE_TYPE=${STORAGE_TYPE:-local}  # local, s3, azure, database
+      - MEDIA_URL=${MEDIA_URL:-/media/}
+      - MEDIA_ROOT=${MEDIA_ROOT:-/app/media}
+      # AWS S3 (optional)
+      - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME:-}
+      - AWS_S3_REGION=${AWS_S3_REGION:-us-east-1}
+      - AWS_S3_CUSTOM_DOMAIN=${AWS_S3_CUSTOM_DOMAIN:-}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      # Azure Blob (optional)
+      - AZURE_STORAGE_CONNECTION_STRING=${AZURE_STORAGE_CONNECTION_STRING:-}
+      - AZURE_STORAGE_CONTAINER_NAME=${AZURE_STORAGE_CONTAINER_NAME:-demands}
 
   frontend:
     build:
