@@ -4,6 +4,13 @@
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
         <div class="flex items-center space-x-4">
+          <NuxtLink 
+            v-if="user?.role === 'SEDUC' || user?.role === 'DIRECTORY'" 
+            to="/admin" 
+            class="text-primary-600 hover:text-primary-800 text-sm font-medium"
+          >
+            Dashboard Admin
+          </NuxtLink>
           <span class="text-gray-700">{{ user?.first_name }} {{ user?.last_name }}</span>
           <span class="px-2 py-1 text-xs rounded bg-gray-200">{{ user?.role }}</span>
           <button 
