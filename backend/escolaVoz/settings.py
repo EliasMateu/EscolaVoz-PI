@@ -23,7 +23,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'accounts',
+    'schools',
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
