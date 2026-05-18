@@ -101,10 +101,6 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'auth'
-})
-
 const auth = useAuthStore()
 const user = computed(() => auth.user)
 
