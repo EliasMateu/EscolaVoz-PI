@@ -1,23 +1,25 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <header class="bg-white shadow">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+    <header class="bg-white dark:bg-gray-800 shadow">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('dashboard') }}</h1>
         <div class="flex items-center space-x-4">
+          <LocaleToggle />
+          <ThemeToggle />
           <NuxtLink 
             v-if="user?.role === 'SEDUC' || user?.role === 'DIRECTORY'" 
             to="/admin" 
-            class="text-primary-600 hover:text-primary-800 text-sm font-medium"
+            class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
           >
             Dashboard Admin
           </NuxtLink>
-          <span class="text-gray-700">{{ user?.first_name }} {{ user?.last_name }}</span>
-          <span class="px-2 py-1 text-xs rounded bg-gray-200">{{ user?.role }}</span>
+          <span class="text-gray-700 dark:text-gray-300">{{ user?.first_name }} {{ user?.last_name }}</span>
+          <span class="px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">{{ user?.role }}</span>
           <button 
             @click="handleLogout"
-            class="text-sm text-red-600 hover:text-red-800"
+            class="text-sm text-red-600 hover:text-red-800 dark:text-red-400"
           >
-            Sair
+            {{ t('logout') }}
           </button>
         </div>
       </div>
@@ -26,7 +28,7 @@
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <div class="px-4 py-6 sm:px-0">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
@@ -36,15 +38,15 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">Total de Demandas</dt>
-                    <dd class="text-lg font-medium text-gray-900">{{ demands.length }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">{{ t('total') }}</dt>
+                    <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ demands.length }}</dd>
                   </dl>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
@@ -54,15 +56,15 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">Pendentes</dt>
-                    <dd class="text-lg font-medium text-gray-900">{{ pendingCount }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">{{ t('pending') }}</dt>
+                    <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ pendingCount }}</dd>
                   </dl>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
@@ -72,8 +74,8 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">Concluídas</dt>
-                    <dd class="text-lg font-medium text-gray-900">{{ completedCount }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">{{ t('completed') }}</dt>
+                    <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ completedCount }}</dd>
                   </dl>
                 </div>
               </div>
@@ -82,31 +84,31 @@
         </div>
 
         <div class="mt-8">
-          <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Minhas Demandas
+              <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                {{ t('myDemands') }}
               </h3>
               <NuxtLink 
                 to="/demands/new" 
                 class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 text-sm"
               >
-                Nova Demanda
+                {{ t('newDemand') }}
               </NuxtLink>
             </div>
-            <div class="border-t border-gray-200">
-              <div v-if="demands.length === 0" class="text-center py-12 text-gray-500">
-                Nenhuma demanda cadastrada
+            <div class="border-t border-gray-200 dark:border-gray-700">
+              <div v-if="demands.length === 0" class="text-center py-12 text-gray-500 dark:text-gray-400">
+                {{ t('noDemands') }}
               </div>
-              <ul v-else class="divide-y divide-gray-200">
+              <ul v-else class="divide-y divide-gray-200 dark:divide-gray-700">
                 <li v-for="demand in demands" :key="demand.id" class="px-4 py-4 sm:px-6">
                   <div class="flex items-center justify-between">
                     <div class="flex-1 min-w-0">
-                      <p class="text-sm font-medium text-primary-600 truncate">
+                      <p class="text-sm font-medium text-primary-600 dark:text-primary-400 truncate">
                         {{ demand.title }}
                       </p>
-                      <p class="text-sm text-gray-500">
-                        {{ demand.category_name }} • {{ demand.priority }}
+                      <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {{ demand.category_name }} • {{ t(demand.priority.toLowerCase()) }}
                       </p>
                     </div>
                     <div class="ml-2 flex-shrink-0 flex">
@@ -119,7 +121,7 @@
                     </div>
                   </div>
                   <div class="mt-2 sm:flex sm:justify-between">
-                    <div class="flex items-center text-sm text-gray-500">
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
                       <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
@@ -132,8 +134,8 @@
           </div>
         </div>
 
-        <div v-if="user?.school_name" class="mt-4 text-sm text-gray-600">
-          Escola: <strong>{{ user.school_name }}</strong>
+        <div v-if="user?.school_name" class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+          {{ t('school') }}: <strong>{{ user.school_name }}</strong>
         </div>
       </div>
     </main>
@@ -141,8 +143,13 @@
 </template>
 
 <script setup lang="ts">
+import { useThemeStore, translations } from '~/composables/useTheme'
+
 const auth = useAuthStore()
 const demandStore = useDemandStore()
+const store = useThemeStore()
+
+const t = (key: string) => translations[store.locale][key as keyof typeof translations['pt-BR']] || key
 
 const user = computed(() => auth.user)
 const demands = computed(() => demandStore.demands)
@@ -150,6 +157,7 @@ const pendingCount = computed(() => demands.value.filter(d => d.status === 'PEND
 const completedCount = computed(() => demands.value.filter(d => d.status === 'COMPLETED').length)
 
 onMounted(() => {
+  store.initTheme()
   demandStore.fetchDemands()
 })
 
@@ -159,12 +167,12 @@ const handleLogout = () => {
 
 const statusClass = (status: string) => {
   const classes: Record<string, string> = {
-    PENDING: 'bg-yellow-100 text-yellow-800',
-    IN_PROGRESS: 'bg-blue-100 text-blue-800',
-    COMPLETED: 'bg-green-100 text-green-800',
-    REJECTED: 'bg-red-100 text-red-800',
+    PENDING: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+    IN_PROGRESS: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+    COMPLETED: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+    REJECTED: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
   }
-  return classes[status] || 'bg-gray-100 text-gray-800'
+  return classes[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
 }
 
 const statusLabel = (status: string) => {
