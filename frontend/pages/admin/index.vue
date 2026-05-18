@@ -1,33 +1,11 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <header class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Admin</h1>
-        <div class="flex items-center space-x-4">
-          <LocaleToggle />
-          <ThemeToggle />
-          <NuxtLink 
-            v-if="user?.role === 'SEDUC'"
-            to="/admin/categories" 
-            class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
-          >
-            Categorias
-          </NuxtLink>
-          <NuxtLink 
-            v-if="user?.role === 'SEDUC' || user?.role === 'DIRECTORY'"
-            to="/admin/kanban" 
-            class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
-          >
-            Kanban
-          </NuxtLink>
-          <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-            {{ t('back') }}
-          </NuxtLink>
-          <button 
-            @click="handleExport"
-            class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-sm"
-          >
-            {{ t('export') }}
+  <div>
+    <div class="flex justify-end mb-6">
+      <button 
+        @click="handleExport"
+        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm font-medium transition-colors"
+      >
+        {{ t('export') }}
           </button>
         </div>
       </div>
@@ -111,7 +89,7 @@
 import { useThemeStore, translations } from '~/composables/useTheme'
 
 definePageMeta({
-  layout: false
+  layout: 'dashboard'
 })
 
 const dashboardStore = useDashboardStore()

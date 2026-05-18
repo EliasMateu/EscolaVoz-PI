@@ -1,19 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <header class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('newDemand') }}</h1>
-        <div class="flex items-center gap-3">
-          <LocaleToggle />
-          <ThemeToggle />
-          <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-            {{ t('back') }}
-          </NuxtLink>
-        </div>
-      </div>
-    </header>
-
-    <main class="max-w-3xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div>
+    <div class="max-w-3xl mx-auto">
       <div class="bg-white dark:bg-gray-800 shadow px-4 py-5 sm:rounded-lg sm:p-6">
         <form @submit.prevent="handleSubmit">
           <div v-if="error" class="mb-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded">
@@ -88,7 +75,7 @@
           </div>
         </form>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -96,7 +83,7 @@
 import { useThemeStore, translations } from '~/composables/useTheme'
 
 definePageMeta({
-  layout: false
+  layout: 'dashboard'
 })
 
 const demandStore = useDemandStore()

@@ -14,6 +14,12 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 interface _GlobalComponents {
+  AppBadge: typeof import("../../components/AppBadge.vue")['default']
+  AppButton: typeof import("../../components/AppButton.vue")['default']
+  AppCard: typeof import("../../components/AppCard.vue")['default']
+  AppInput: typeof import("../../components/AppInput.vue")['default']
+  AppSelect: typeof import("../../components/AppSelect.vue")['default']
+  KanbanFilters: typeof import("../../components/KanbanFilters.vue")['default']
   LocaleToggle: typeof import("../../components/LocaleToggle.vue")['default']
   ThemeToggle: typeof import("../../components/ThemeToggle.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
@@ -39,6 +45,12 @@ interface _GlobalComponents {
   Html: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Html']
   Body: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Body']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
+  LazyAppBadge: LazyComponent<typeof import("../../components/AppBadge.vue")['default']>
+  LazyAppButton: LazyComponent<typeof import("../../components/AppButton.vue")['default']>
+  LazyAppCard: LazyComponent<typeof import("../../components/AppCard.vue")['default']>
+  LazyAppInput: LazyComponent<typeof import("../../components/AppInput.vue")['default']>
+  LazyAppSelect: LazyComponent<typeof import("../../components/AppSelect.vue")['default']>
+  LazyKanbanFilters: LazyComponent<typeof import("../../components/KanbanFilters.vue")['default']>
   LazyLocaleToggle: LazyComponent<typeof import("../../components/LocaleToggle.vue")['default']>
   LazyThemeToggle: LazyComponent<typeof import("../../components/ThemeToggle.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>

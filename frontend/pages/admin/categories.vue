@@ -1,33 +1,16 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <header class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('categories') }} Admin</h1>
-        <div class="flex items-center space-x-4">
-          <LocaleToggle />
-          <ThemeToggle />
-          <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-            {{ t('dashboard') }}
-          </NuxtLink>
-          <NuxtLink to="/admin" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-            {{ t('back') }}
-          </NuxtLink>
+  <div>
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-medium text-gray-900 dark:text-white">{{ t('categories') }}</h2>
+          <button 
+            @click="openModal()"
+            class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 text-sm font-medium transition-colors"
+          >
+            + Nova Categoria
+          </button>
         </div>
-      </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <div class="px-4 py-6 sm:px-0">
-        <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-6">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-white">{{ t('categories') }}</h2>
-            <button 
-              @click="openModal()"
-              class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 text-sm"
-            >
-              + Nova Categoria
-            </button>
-          </div>
 
           <div v-if="categories.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
             Nenhuma categoria cadastrada
@@ -172,7 +155,7 @@ import { useThemeStore, translations } from '~/composables/useTheme'
 import type { Category } from '~/composables/useCategories'
 
 definePageMeta({
-  layout: false
+  layout: 'dashboard'
 })
 
 const categoryStore = useCategoryStore()
