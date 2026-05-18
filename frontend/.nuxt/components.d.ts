@@ -19,6 +19,7 @@ export const AppButton: typeof import("../components/AppButton.vue")['default']
 export const AppCard: typeof import("../components/AppCard.vue")['default']
 export const AppInput: typeof import("../components/AppInput.vue")['default']
 export const AppSelect: typeof import("../components/AppSelect.vue")['default']
+export const AppSidebar: typeof import("../components/AppSidebar.vue")['default']
 export const KanbanFilters: typeof import("../components/KanbanFilters.vue")['default']
 export const LocaleToggle: typeof import("../components/LocaleToggle.vue")['default']
 export const ThemeToggle: typeof import("../components/ThemeToggle.vue")['default']
@@ -50,6 +51,7 @@ export const LazyAppButton: LazyComponent<typeof import("../components/AppButton
 export const LazyAppCard: LazyComponent<typeof import("../components/AppCard.vue")['default']>
 export const LazyAppInput: LazyComponent<typeof import("../components/AppInput.vue")['default']>
 export const LazyAppSelect: LazyComponent<typeof import("../components/AppSelect.vue")['default']>
+export const LazyAppSidebar: LazyComponent<typeof import("../components/AppSidebar.vue")['default']>
 export const LazyKanbanFilters: LazyComponent<typeof import("../components/KanbanFilters.vue")['default']>
 export const LazyLocaleToggle: LazyComponent<typeof import("../components/LocaleToggle.vue")['default']>
 export const LazyThemeToggle: LazyComponent<typeof import("../components/ThemeToggle.vue")['default']>

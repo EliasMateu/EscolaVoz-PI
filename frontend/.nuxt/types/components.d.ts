@@ -19,6 +19,7 @@ interface _GlobalComponents {
   AppCard: typeof import("../../components/AppCard.vue")['default']
   AppInput: typeof import("../../components/AppInput.vue")['default']
   AppSelect: typeof import("../../components/AppSelect.vue")['default']
+  AppSidebar: typeof import("../../components/AppSidebar.vue")['default']
   KanbanFilters: typeof import("../../components/KanbanFilters.vue")['default']
   LocaleToggle: typeof import("../../components/LocaleToggle.vue")['default']
   ThemeToggle: typeof import("../../components/ThemeToggle.vue")['default']
@@ -50,6 +51,7 @@ interface _GlobalComponents {
   LazyAppCard: LazyComponent<typeof import("../../components/AppCard.vue")['default']>
   LazyAppInput: LazyComponent<typeof import("../../components/AppInput.vue")['default']>
   LazyAppSelect: LazyComponent<typeof import("../../components/AppSelect.vue")['default']>
+  LazyAppSidebar: LazyComponent<typeof import("../../components/AppSidebar.vue")['default']>
   LazyKanbanFilters: LazyComponent<typeof import("../../components/KanbanFilters.vue")['default']>
   LazyLocaleToggle: LazyComponent<typeof import("../../components/LocaleToggle.vue")['default']>
   LazyThemeToggle: LazyComponent<typeof import("../../components/ThemeToggle.vue")['default']>
