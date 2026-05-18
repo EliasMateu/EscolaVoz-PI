@@ -1,4 +1,6 @@
 export default defineNuxtPlugin(() => {
-  const auth = useAuthStore()
-  auth.initAuth()
+  if (import.meta.client) {
+    const auth = useAuthStore()
+    auth.initAuth()
+  }
 })
