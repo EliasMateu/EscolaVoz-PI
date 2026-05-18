@@ -109,8 +109,11 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: false
+})
+
 const auth = useAuthStore()
-const router = useRouter()
 
 const form = reactive({
   cpf: '',
@@ -140,7 +143,7 @@ const handleRegister = async () => {
   const result = await auth.register(form)
   
   if (result.success) {
-    router.push('/dashboard')
+    navigateTo('/dashboard', { replace: true })
   } else {
     error.value = result.error || 'Erro ao criar conta'
   }
@@ -148,7 +151,7 @@ const handleRegister = async () => {
 
 onMounted(() => {
   if (auth.isAuthenticated) {
-    router.push('/dashboard')
+    navigateTo('/dashboard', { replace: true })
   }
 })
 </script>

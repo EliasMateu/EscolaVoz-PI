@@ -62,8 +62,11 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: false
+})
+
 const auth = useAuthStore()
-const router = useRouter()
 
 const form = reactive({
   email: '',
@@ -78,7 +81,7 @@ const handleLogin = async () => {
   const result = await auth.login(form)
   
   if (result.success) {
-    router.push('/dashboard')
+    navigateTo('/dashboard', { replace: true })
   } else {
     error.value = result.error || 'Erro ao fazer login'
   }
@@ -86,7 +89,7 @@ const handleLogin = async () => {
 
 onMounted(() => {
   if (auth.isAuthenticated) {
-    router.push('/dashboard')
+    navigateTo('/dashboard', { replace: true })
   }
 })
 </script>
