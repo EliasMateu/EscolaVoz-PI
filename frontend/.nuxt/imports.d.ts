@@ -33,5 +33,6 @@ export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
 export { useAuthStore } from '../composables/useAuth';
 export { useDashboardStore } from '../composables/useDashboard';
 export { useDemandStore } from '../composables/useDemands';
+export { useThemeStore, translations, useTrans, Theme, Locale } from '../composables/useTheme';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

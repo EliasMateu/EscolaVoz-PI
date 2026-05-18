@@ -93,6 +93,7 @@ declare global {
   const toRef: typeof import('vue').toRef
   const toRefs: typeof import('vue').toRefs
   const toValue: typeof import('vue').toValue
+  const translations: typeof import('../../composables/useTheme').translations
   const triggerRef: typeof import('vue').triggerRef
   const tryUseNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt').tryUseNuxtApp
   const unref: typeof import('vue').unref
@@ -183,6 +184,8 @@ declare global {
   const useSlots: typeof import('vue').useSlots
   const useState: typeof import('../../node_modules/nuxt/dist/app/composables/state').useState
   const useTemplateRef: typeof import('vue').useTemplateRef
+  const useThemeStore: typeof import('../../composables/useTheme').useThemeStore
+  const useTrans: typeof import('../../composables/useTheme').useTrans
   const useTransitionState: typeof import('vue').useTransitionState
   const watch: typeof import('vue').watch
   const watchEffect: typeof import('vue').watchEffect
@@ -200,6 +203,9 @@ declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { Theme, Locale } from '../../composables/useTheme'
+  import('../../composables/useTheme')
 }
 // for vue template auto import
 import { UnwrapRef } from 'vue'
@@ -297,6 +303,7 @@ declare module 'vue' {
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
+    readonly translations: UnwrapRef<typeof import('../../composables/useTheme')['translations']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly tryUseNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['tryUseNuxtApp']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
@@ -387,6 +394,8 @@ declare module 'vue' {
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
+    readonly useThemeStore: UnwrapRef<typeof import('../../composables/useTheme')['useThemeStore']>
+    readonly useTrans: UnwrapRef<typeof import('../../composables/useTheme')['useTrans']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>

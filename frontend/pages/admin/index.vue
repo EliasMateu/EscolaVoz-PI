@@ -6,6 +6,13 @@
         <div class="flex items-center space-x-4">
           <LocaleToggle />
           <ThemeToggle />
+          <NuxtLink 
+            v-if="user?.role === 'SEDUC'"
+            to="/admin/categories" 
+            class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
+          >
+            Gerenciar Categorias
+          </NuxtLink>
           <NuxtLink to="/dashboard" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
             {{ t('back') }}
           </NuxtLink>
@@ -106,6 +113,7 @@ const store = useThemeStore()
 
 const t = (key: string) => translations[store.locale][key as keyof typeof translations['pt-BR']] || key
 
+const user = computed(() => auth.user)
 const stats = computed(() => dashboardStore.stats)
 const byCategory = computed(() => dashboardStore.byCategory)
 const bySchool = computed(() => dashboardStore.bySchool)
