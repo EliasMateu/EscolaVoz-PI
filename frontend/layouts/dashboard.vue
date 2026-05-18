@@ -1,23 +1,13 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
-    <AppSidebar :is-open="sidebarOpen" @close="sidebarOpen = false" />
+  <div class="flex h-screen w-full bg-gray-50 dark:bg-gray-900">
+    <AppSidebar />
 
-    <div class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+    <main class="flex-1 flex flex-col w-full min-w-0 h-screen overflow-hidden">
       <header class="sticky top-0 z-30 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm shrink-0">
-        <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center gap-4">
-            <button 
-              @click="sidebarOpen = true"
-              class="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
-            >
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ pageTitle }}
-            </h1>
-          </div>
+        <div class="flex items-center justify-between h-16 px-4 sm:px-6 w-full">
+          <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
+            {{ pageTitle }}
+          </h1>
           <div class="flex items-center gap-2">
             <NuxtLink 
               to="/demands/new"
@@ -32,19 +22,15 @@
         </div>
       </header>
 
-      <main class="flex-1 p-4 sm:p-6 lg:p-8">
-        <div class="max-w-7xl mx-auto">
-          <slot />
-        </div>
-      </main>
-    </div>
+      <div class="flex-1 w-full min-w-0 overflow-auto p-4 sm:p-6">
+        <slot />
+      </div>
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
-
-const sidebarOpen = ref(false)
 
 const pageTitle = computed(() => {
   const titles: Record<string, string> = {
@@ -61,9 +47,5 @@ const pageTitle = computed(() => {
     }
   }
   return 'EscolaVoz'
-})
-
-watch(() => route.path, () => {
-  sidebarOpen.value = false
 })
 </script>
