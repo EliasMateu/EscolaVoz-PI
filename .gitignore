@@ -150,6 +150,14 @@ activemq-data/
 # Environments
 .env
 .envrc
+.env.local
+
+# Node
+node_modules/
+frontend/node_modules/
+.nuxt/
+.output/
+dist/
 .venv
 env/
 venv/
