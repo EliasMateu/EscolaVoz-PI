@@ -53,3 +53,19 @@ class DemandUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Demand
         fields = ['title', 'description', 'category', 'status', 'priority', 'image']
+        extra_kwargs = {
+            'image': {'required': False},
+        }
+
+    def validate_image(self, value):
+        return value
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image')
+        
+        if image == '' or image is None:
+            if instance.image:
+                instance.image.delete(save=False)
+                instance.image = None
+        
+        return super().update(instance, validated_data)

@@ -16,17 +16,17 @@
       </div>
       
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg p-5">
-        <div class="text-2xl font-bold text-yellow-600">{{ stats.by_status.pending }}</div>
+        <div class="text-2xl font-bold text-yellow-600">{{ stats.by_status?.pending ?? 0 }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('pending') }}</div>
       </div>
       
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg p-5">
-        <div class="text-2xl font-bold text-blue-600">{{ stats.by_status.in_progress }}</div>
+        <div class="text-2xl font-bold text-blue-600">{{ stats.by_status?.in_progress ?? 0 }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('inProgress') }}</div>
       </div>
       
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg p-5">
-        <div class="text-2xl font-bold text-green-600">{{ stats.by_status.completed }}</div>
+        <div class="text-2xl font-bold text-green-600">{{ stats.by_status?.completed ?? 0 }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('completed') }}</div>
       </div>
     </div>
@@ -59,19 +59,19 @@
       <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ t('priority') }}</h2>
       <div class="grid grid-cols-4 gap-4">
         <div class="text-center">
-          <div class="text-2xl font-bold text-gray-600 dark:text-gray-300">{{ stats.by_priority.LOW || 0 }}</div>
+          <div class="text-2xl font-bold text-gray-600 dark:text-gray-300">{{ stats.by_priority?.LOW ?? 0 }}</div>
           <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('low') }}</div>
         </div>
         <div class="text-center">
-          <div class="text-2xl font-bold text-yellow-600">{{ stats.by_priority.MEDIUM || 0 }}</div>
+          <div class="text-2xl font-bold text-yellow-600">{{ stats.by_priority?.MEDIUM ?? 0 }}</div>
           <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('medium') }}</div>
         </div>
         <div class="text-center">
-          <div class="text-2xl font-bold text-orange-600">{{ stats.by_priority.HIGH || 0 }}</div>
+          <div class="text-2xl font-bold text-orange-600">{{ stats.by_priority?.HIGH ?? 0 }}</div>
           <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('high') }}</div>
         </div>
         <div class="text-center">
-          <div class="text-2xl font-bold text-red-600">{{ stats.by_priority.URGENT || 0 }}</div>
+          <div class="text-2xl font-bold text-red-600">{{ stats.by_priority?.URGENT ?? 0 }}</div>
           <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('urgent') }}</div>
         </div>
       </div>

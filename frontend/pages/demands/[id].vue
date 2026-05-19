@@ -177,13 +177,13 @@
               ></textarea>
             </div>
 
-            <div v-if="demand.image_url || (isEditing && (editForm.image || imagePreview))">
+            <div v-if="getImageUrl(demand) || (isEditing && (editForm.image || imagePreview))">
               <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                 Imagem
               </h3>
-              <div v-if="!isEditing && demand.image_url" class="mt-2">
+              <div v-if="!isEditing && getImageUrl(demand)" class="mt-2">
                 <img 
-                  :src="demand.image_url" 
+                  :src="getImageUrl(demand)" 
                   alt="Imagem da demanda" 
                   class="max-w-md rounded-lg border border-gray-200 dark:border-gray-700"
                 >

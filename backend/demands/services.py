@@ -45,8 +45,9 @@ class DemandService:
         return self.repository.create(
             title=data['title'],
             description=data.get('description', ''),
-            category_id=data['category'],
+            category_id=data['category'].id if hasattr(data['category'], 'id') else data['category'],
             priority=priority,
+            image=data.get('image'),
             school=user.school,
             created_by=user
         )
@@ -65,7 +66,15 @@ class DemandService:
             demand.description = data['description']
         
         if data.get('category') is not None:
-            demand.category_id = data['category']
+            demand.category_id = data['category'].id if hasattr(data['category'], 'id') else data['category']
+        
+        if 'image' in data:
+            if data.get('removeImage'):
+                if demand.image:
+                    demand.image.delete(save=False)
+                    demand.image = None
+            elif data['image']:
+                demand.image = data['image']
         
         if user.role in ['DIRECTORY', 'SEDUC']:
             if data.get('status') is not None:
