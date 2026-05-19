@@ -47,9 +47,6 @@
 
 <script setup lang="ts">
 const sidebarOpen = ref(false)
-</script>
-
-<script setup lang="ts">
 const route = useRoute()
 
 const pageTitle = computed(() => {
