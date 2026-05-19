@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
       <div v-if="isLoading" class="flex items-center justify-center py-12">
         <svg class="animate-spin h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -16,7 +16,7 @@
       </div>
 
       <div v-else>
-        <NuxtLink to="/dashboard" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mb-4">
+        <NuxtLink to="/dashboard" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mb-3 sm:mb-4">
           <svg class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
@@ -24,13 +24,13 @@
         </NuxtLink>
 
         <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <div class="flex items-start justify-between">
-              <div class="flex-1">
-                <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+          <div class="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <h1 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
                   {{ demand.title }}
                 </h1>
-                <div class="flex items-center gap-3 mt-2">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3 mt-2">
                   <span :class="['inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium', statusClass(demand.status)]">
                     {{ statusLabel(demand.status) }}
                   </span>
@@ -39,7 +39,7 @@
                   </span>
                 </div>
               </div>
-              <div v-if="isAdmin" class="flex items-center gap-2">
+              <div v-if="isAdmin" class="flex flex-wrap items-center gap-2">
                 <button
                   v-if="canEdit"
                   @click="toggleEdit"

@@ -23,8 +23,13 @@ export const useCategoryStore = defineStore('categories', {
   actions: {
     async fetchCategories() {
       const config = useRuntimeConfig()
+      const auth = useAuthStore()
       try {
-        const response = await $fetch<PaginatedResponse | Category[]>(`${config.public.apiBase}/categories/`)
+        const response = await $fetch<PaginatedResponse | Category[]>(`${config.public.apiBase}/categories/`, {
+          headers: {
+            Authorization: `Bearer ${auth.accessToken}`,
+          },
+        })
         this.categories = Array.isArray(response) ? response : response.results || []
       } catch (error) {
         console.error('Error fetching categories:', error)

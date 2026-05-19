@@ -21,9 +21,20 @@ class DemandViewSet(viewsets.ModelViewSet):
     serializer_class = DemandSerializer
     permission_classes = [permissions.IsAuthenticated]
     service = DemandService()
+    lookup_field = 'id'
     
     def get_queryset(self):
         return self.service.get_demands_for_user(self.request.user)
+    
+    def get_object(self):
+        pk = self.kwargs.get(self.lookup_field)
+        if pk:
+            try:
+                return self.service.get_demand_by_id(pk, self.request.user)
+            except (DemandNotFoundException, DemandPermissionException):
+                from rest_framework.exceptions import NotFound
+                raise NotFound()
+        return super().get_object()
     
     def get_serializer_class(self):
         if self.action == 'create':

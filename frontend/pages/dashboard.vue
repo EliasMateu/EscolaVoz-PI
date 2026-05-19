@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
       <div class="p-5">
         <div class="flex items-center">
@@ -74,18 +74,18 @@
           {{ t('noDemands') }}
         </div>
         <ul v-else class="divide-y divide-gray-200 dark:divide-gray-700">
-          <li v-for="demand in demands" :key="demand.id" class="px-4 py-4 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+          <li v-for="demand in demands" :key="demand.id" class="px-3 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
             <NuxtLink :to="`/demands/${demand.id}`" class="block">
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-primary-600 dark:text-primary-400 truncate">
                   {{ demand.title }}
                 </p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   {{ demand.category_name }} • {{ t(demand.priority.toLowerCase()) }}
                 </p>
               </div>
-              <div class="ml-2 flex-shrink-0 flex">
+              <div class="flex-shrink-0">
                 <span 
                   :class="statusClass(demand.status)"
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
@@ -94,13 +94,11 @@
                 </span>
               </div>
             </div>
-            <div class="mt-2 sm:flex sm:justify-between">
-              <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {{ formatDate(demand.created_at) }}
-              </div>
+            <div class="mt-2 flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+              <svg class="flex-shrink-0 mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {{ formatDate(demand.created_at) }}
             </div>
             </NuxtLink>
           </li>

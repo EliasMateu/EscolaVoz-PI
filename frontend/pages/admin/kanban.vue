@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="mb-6">
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Filtros</h3>
+    <div class="mb-4 sm:mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
+        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">Filtros</h3>
         <KanbanFilters 
           :schools="schools" 
           :categories="categories"
           @update:filters="handleFilterChange"
         />
       </div>
-      <div class="mt-4 flex items-center justify-between">
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Total de demandas: <span class="font-medium text-gray-900 dark:text-white">{{ filteredDemands.length }}</span>
+      <div class="mt-3 sm:mt-4 flex items-center justify-between">
+        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          Total: <span class="font-medium text-gray-900 dark:text-white">{{ filteredDemands.length }}</span>
         </p>
       </div>
     </div>
@@ -23,7 +23,8 @@
       </svg>
     </div>
 
-    <div v-else class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div v-else class="flex overflow-x-auto gap-3 sm:gap-6 pb-4 -mx-3 px-3 sm:mx-0 sm:px-0">
+      <div class="w-[280px] sm:w-auto sm:flex-1 min-w-[280px] sm:min-w-0">
       <div 
         class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
         @dragover.prevent
@@ -172,9 +173,10 @@
         </div>
       </div>
     </div>
+    </div>
 
-    <div v-if="selectedDemand" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" @click.self="selectedDemand = null">
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+    <div v-if="selectedDemand" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4" @click.self="selectedDemand = null">
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
           <div class="flex justify-between items-center">
             <h3 class="text-xl font-bold text-white">{{ selectedDemand.title }}</h3>

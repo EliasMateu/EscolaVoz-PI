@@ -1,9 +1,22 @@
 <template>
-  <aside class="h-screen w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shrink-0 flex flex-col">
+  <aside 
+    :class="[
+      'fixed lg:relative z-50 h-screen w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shrink-0 flex flex-col transform transition-transform duration-300',
+      isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+    ]"
+  >
     <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
-      <NuxtLink to="/dashboard" class="flex items-center gap-2">
+      <NuxtLink to="/dashboard" class="flex items-center gap-2" @click="$emit('close')">
         <span class="text-xl font-bold text-primary-600">EscolaVoz</span>
       </NuxtLink>
+      <button 
+        @click="$emit('close')"
+        class="lg:hidden p-2 -mr-2 text-gray-500 hover:text-gray-700 dark:text-gray-400"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
 
     <div class="flex items-center gap-3 px-4 py-4 border-b border-gray-200 dark:border-gray-700">
@@ -32,6 +45,7 @@
     <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
       <NuxtLink 
         to="/dashboard"
+        @click="$emit('close')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full"
         :class="isActive('/dashboard') 
           ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' 
@@ -45,6 +59,7 @@
 
       <NuxtLink 
         to="/demands/new"
+        @click="$emit('close')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full"
         :class="isActive('/demands/new') 
           ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' 
@@ -78,6 +93,7 @@
       <div v-if="mounted && isAdmin && adminOpen" class="pl-4 space-y-1 mt-1">
         <NuxtLink 
           to="/admin"
+          @click="$emit('close')"
           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full"
           :class="isActive('/admin') && !isActive('/admin/')
             ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' 
@@ -91,6 +107,7 @@
 
         <NuxtLink 
           to="/admin/kanban"
+          @click="$emit('close')"
           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full"
           :class="isActive('/admin/kanban')
             ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' 
@@ -105,6 +122,7 @@
         <NuxtLink 
           v-if="mounted && isSEDUC"
           to="/admin/categories"
+          @click="$emit('close')"
           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full"
           :class="isActive('/admin/categories')
             ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' 
@@ -182,6 +200,14 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '~/composables/useTheme'
+
+defineProps<{
+  isOpen: boolean
+}>()
+
+defineEmits<{
+  close: []
+}>()
 
 const route = useRoute()
 const auth = useAuthStore()

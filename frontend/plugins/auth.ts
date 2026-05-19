@@ -1,6 +1,13 @@
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
   if (import.meta.client) {
     const auth = useAuthStore()
-    auth.initAuth()
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+
+    if (accessToken && refreshToken) {
+      auth.accessToken = accessToken
+      auth.refreshToken = refreshToken
+      await auth.fetchUser()
+    }
   }
 })

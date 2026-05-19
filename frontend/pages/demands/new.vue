@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="max-w-3xl mx-auto">
-      <div class="bg-white dark:bg-gray-800 shadow px-4 py-5 sm:rounded-lg sm:p-6">
+      <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 sm:p-6">
         <form @submit.prevent="handleSubmit">
           <div v-if="error" class="mb-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded">
             {{ error }}
