@@ -2,7 +2,7 @@
 
 **Sistema de Gestão de Demandas Escolares**
 
-EscolaVoz é uma plataforma web para registro, acompanhamento e gestão de demandas de escolas da rede pública. O projeto nasce da necessidade de dar voz às escolas — um canal digital onde funcionários podem relatar necessidades do dia a dia e gestores podem acompanhar, priorizar e resolver cada solicitação de forma organizada e transparente.
+EscolaVoz é uma plataforma web para registro, acompanhamento e gestão de demandas de escolas da rede pública. O projeto nasce da necessidade de dar voz às escolas, um canal digital onde funcionários podem relatar necessidades do dia a dia e gestores podem acompanhar, priorizar e resolver cada solicitação de forma organizada e transparente.
 
 Desenvolvido como projeto integrador da disciplina **DRP06 - Projeto Integrador em Computação I** (Turma 001).
 
@@ -10,7 +10,7 @@ Desenvolvido como projeto integrador da disciplina **DRP06 - Projeto Integrador 
 
 ## 🧭 Motivação
 
-Em muitas redes de ensino, as solicitações das escolas ainda são feitas por meios informais — telefonemas, e-mails, papel impresso — o que dificulta o rastreamento, a priorização e a prestação de contas. O EscolaVoz surge para:
+Em muitas redes de ensino, as solicitações das escolas ainda são feitas por meios informais, telefonemas, e-mails, papel impresso, o que dificulta o rastreamento, a priorização e a prestação de contas. O EscolaVoz surge para:
 
 - **Centralizar** todas as demandas escolares em um único sistema
 - **Dar visibilidade** ao andamento de cada solicitação
