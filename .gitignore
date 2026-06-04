@@ -150,6 +150,14 @@ activemq-data/
 # Environments
 .env
 .envrc
+.env.local
+
+# Node
+node_modules/
+frontend/node_modules/
+.nuxt/
+.output/
+dist/
 .venv
 env/
 venv/
@@ -216,3 +224,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Media uploads
+backend/media/
+
+# Docs
+docs/
+
+# Windows
+nul
