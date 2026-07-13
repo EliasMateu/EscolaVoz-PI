@@ -1,71 +1,94 @@
 <template>
-  <div>
-    <label v-if="label" :for="id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-      {{ label }}
-      <span v-if="required" class="text-red-500">*</span>
-    </label>
-    <select
-      :id="id"
-      :model-value="modelValue"
-      :disabled="disabled"
-      :required="required"
-      :class="selectClasses"
-      @change="emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
+  <div class="relative" ref="wrapperRef">
+    <button
+      type="button"
+      @click="open = !open"
+      class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left flex items-center justify-between gap-2"
+      :class="{ 'ring-2 ring-primary-500 border-primary-500': open }"
     >
-      <option v-if="placeholder" value="" disabled>{{ placeholder }}</option>
-      <option
-        v-for="option in options"
-        :key="option.value"
-        :value="option.value"
+      <span :class="{ 'text-gray-400 dark:text-gray-500': !selectedLabel }">
+        {{ selectedLabel || placeholder }}
+      </span>
+      <svg
+        :class="['w-4 h-4 shrink-0 text-gray-400 transition-transform', open && 'rotate-180']"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor"
       >
-        {{ option.label }}
-      </option>
-    </select>
-    <p v-if="error" class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ error }}</p>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <div
+      v-if="open"
+      class="fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 max-h-60 overflow-auto"
+      :style="dropdownStyle"
+    >
+      <button
+        v-for="opt in options"
+        :key="opt.value"
+        type="button"
+        @click="select(opt.value)"
+        class="block w-full px-4 py-2 text-sm text-left transition-colors"
+        :class="modelValue === opt.value
+          ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium'
+          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+      >
+        {{ opt.label }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-interface Option {
-  value: string | number
-  label: string
-}
-
-interface Props {
-  modelValue?: string | number
-  options: Option[]
-  label?: string
+const props = defineProps<{
+  modelValue: string
+  options: { value: string; label: string }[]
   placeholder?: string
-  disabled?: boolean
-  required?: boolean
-  error?: string
-  id?: string
-}
+}>()
 
-const props = withDefaults(defineProps<Props>(), {
-  id: () => `select-${Math.random().toString(36).substr(2, 9)}`,
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+}>()
+
+const open = ref(false)
+const wrapperRef = ref<HTMLElement | null>(null)
+const dropdownStyle = ref({})
+
+const selectedLabel = computed(() => {
+  return props.options.find(o => o.value === props.modelValue)?.label || ''
 })
 
-const emit = defineEmits(['update:modelValue'])
+const select = (value: string) => {
+  emit('update:modelValue', value)
+  open.value = false
+}
 
-const selectClasses = computed(() => {
-  const base = 'block w-full rounded-lg border bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0 appearance-none cursor-pointer'
-  
-  const state = props.error
-    ? 'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500/20'
-    : 'border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20'
-  
-  const disabled = props.disabled ? 'opacity-50 cursor-not-allowed' : ''
-  
-  return `${base} ${state} ${disabled} px-4 py-2.5 text-sm bg-no-repeat`
+const positionDropdown = () => {
+  if (!wrapperRef.value) return
+  const rect = wrapperRef.value.getBoundingClientRect()
+  dropdownStyle.value = {
+    left: rect.left + 'px',
+    top: rect.bottom + 'px',
+    width: rect.width + 'px',
+  }
+}
+
+watch(open, (val) => {
+  if (val) {
+    nextTick(positionDropdown)
+  }
+})
+
+const onClickOutside = (e: MouseEvent) => {
+  if (wrapperRef.value && !wrapperRef.value.contains(e.target as Node)) {
+    open.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('mousedown', onClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('mousedown', onClickOutside)
 })
 </script>
-
-<style scoped>
-select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 0.5rem center;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
-}
-</style>
