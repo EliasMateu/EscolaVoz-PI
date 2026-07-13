@@ -23,9 +23,8 @@
       </svg>
     </div>
 
-    <div v-else class="flex overflow-x-auto gap-3 sm:gap-6 pb-4 -mx-3 px-3 sm:mx-0 sm:px-0">
-      <div class="w-[280px] sm:w-auto sm:flex-1 min-w-[280px] sm:min-w-0">
-      <div 
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div
         class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
         @dragover.prevent
         @dragenter.prevent
@@ -33,7 +32,7 @@
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <span class="w-3 h-3 bg-yellow-500 rounded-full shrink-0"></span>
             Pendente
           </h3>
           <span class="text-sm font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-700 px-2 py-0.5 rounded-full">
@@ -41,9 +40,9 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div 
-            v-for="demand in pendingDemands" 
-            :key="demand.id" 
+          <div
+            v-for="demand in pendingDemands"
+            :key="demand.id"
             class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
             :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
             draggable="true"
@@ -62,7 +61,7 @@
         </div>
       </div>
 
-      <div 
+      <div
         class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
         @dragover.prevent
         @dragenter.prevent
@@ -70,7 +69,7 @@
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
+            <span class="w-3 h-3 bg-blue-500 rounded-full shrink-0"></span>
             Em Andamento
           </h3>
           <span class="text-sm font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-700 px-2 py-0.5 rounded-full">
@@ -78,9 +77,9 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div 
-            v-for="demand in inProgressDemands" 
-            :key="demand.id" 
+          <div
+            v-for="demand in inProgressDemands"
+            :key="demand.id"
             class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
             :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
             draggable="true"
@@ -99,7 +98,7 @@
         </div>
       </div>
 
-      <div 
+      <div
         class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
         @dragover.prevent
         @dragenter.prevent
@@ -107,7 +106,7 @@
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+            <span class="w-3 h-3 bg-green-500 rounded-full shrink-0"></span>
             Concluída
           </h3>
           <span class="text-sm font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-700 px-2 py-0.5 rounded-full">
@@ -115,9 +114,9 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div 
-            v-for="demand in completedDemands" 
-            :key="demand.id" 
+          <div
+            v-for="demand in completedDemands"
+            :key="demand.id"
             class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
             :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
             draggable="true"
@@ -136,7 +135,7 @@
         </div>
       </div>
 
-      <div 
+      <div
         class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
         @dragover.prevent
         @dragenter.prevent
@@ -144,7 +143,7 @@
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+            <span class="w-3 h-3 bg-red-500 rounded-full shrink-0"></span>
             Rejeitada
           </h3>
           <span class="text-sm font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-700 px-2 py-0.5 rounded-full">
@@ -152,9 +151,9 @@
           </span>
         </div>
         <div class="space-y-3 overflow-y-auto max-h-[75vh] pr-1">
-          <div 
-            v-for="demand in rejectedDemands" 
-            :key="demand.id" 
+          <div
+            v-for="demand in rejectedDemands"
+            :key="demand.id"
             class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-600 cursor-pointer hover:shadow-md transition-all duration-200"
             :class="{ 'opacity-50': draggedDemand?.id === demand.id }"
             draggable="true"
@@ -172,7 +171,6 @@
           <div v-if="rejectedDemands.length === 0" class="text-center py-8 text-gray-400 text-sm">Nenhuma demanda</div>
         </div>
       </div>
-    </div>
     </div>
 
     <div v-if="selectedDemand" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4" @click.self="selectedDemand = null">

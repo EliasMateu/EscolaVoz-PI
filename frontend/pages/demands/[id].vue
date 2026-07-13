@@ -374,6 +374,8 @@ const priorityLabel = (priority: string) => {
   return labels[priority] || priority
 }
 
+const getImageUrl = (d: Demand | null) => d?.image_url || null
+
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('pt-BR', {
     day: '2-digit',

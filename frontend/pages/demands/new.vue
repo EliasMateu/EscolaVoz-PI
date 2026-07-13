@@ -35,20 +35,25 @@
               </select>
             </div>
 
-            <div v-if="isAdmin">
-              <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('priority') }}</label>
-              <select 
-                id="priority" 
-                v-model="form.priority"
-                required 
-                class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                <option value="LOW">{{ t('low') }}</option>
-                <option value="MEDIUM">{{ t('medium') }}</option>
-                <option value="HIGH">{{ t('high') }}</option>
-                <option value="URGENT">{{ t('urgent') }}</option>
-              </select>
-            </div>
+            <ClientOnly>
+              <div v-if="isAdmin">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Escola</label>
+                <AppSelect
+                  v-model="form.school"
+                  :options="schoolOptions"
+                  placeholder="Selecione uma escola"
+                />
+              </div>
+
+              <div v-if="isAdmin">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('priority') }}</label>
+                <AppSelect
+                  v-model="form.priority"
+                  :options="priorityOptions"
+                  placeholder="Selecione a prioridade"
+                />
+              </div>
+            </ClientOnly>
 
             <div>
               <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -122,6 +127,7 @@ definePageMeta({
 
 const demandStore = useDemandStore()
 const auth = useAuthStore()
+const schoolStore = useSchoolStore()
 const router = useRouter()
 const store = useThemeStore()
 
@@ -131,10 +137,27 @@ const isAdmin = computed(() => {
   return auth.user?.role === 'SEDUC' || auth.user?.role === 'DIRECTORY'
 })
 
+const schools = computed(() => schoolStore.schools)
+
+const schoolOptions = computed(() => {
+  return [
+    { value: '', label: 'Selecione uma escola' },
+    ...schools.value.map(s => ({ value: s.id, label: `${s.name} (${s.code})` }))
+  ]
+})
+
+const priorityOptions = [
+  { value: 'LOW', label: 'Baixa' },
+  { value: 'MEDIUM', label: 'Média' },
+  { value: 'HIGH', label: 'Alta' },
+  { value: 'URGENT', label: 'Urgente' },
+]
+
 const form = reactive({
   title: '',
   description: '',
   category: '',
+  school: '',
   priority: 'MEDIUM' as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT',
   image: null as File | null,
 })
@@ -166,6 +189,7 @@ const removeImage = () => {
 onMounted(() => {
   store.initTheme()
   demandStore.fetchCategories()
+  schoolStore.fetchSchools()
 })
 
 const handleSubmit = async () => {
@@ -173,6 +197,11 @@ const handleSubmit = async () => {
   
   if (!form.title || !form.category) {
     error.value = 'Preencha os campos obrigatórios'
+    return
+  }
+
+  if (isAdmin.value && !form.school) {
+    error.value = 'Selecione uma escola'
     return
   }
 

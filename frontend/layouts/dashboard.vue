@@ -8,7 +8,7 @@
       @click="sidebarOpen = false"
     />
 
-    <main class="flex-1 flex flex-col w-full min-w-0 h-screen overflow-hidden">
+    <main class="flex-1 flex flex-col w-full min-w-0 h-screen">
       <header class="sticky top-0 z-30 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm shrink-0">
         <div class="flex items-center justify-between h-16 px-4 sm:px-6 w-full">
           <button 

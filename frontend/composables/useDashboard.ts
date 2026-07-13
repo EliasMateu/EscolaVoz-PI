@@ -2,13 +2,10 @@ import { defineStore } from 'pinia'
 
 interface Stats {
   total: number
-  by_status: {
-    pending: number
-    in_progress: number
-    completed: number
-    rejected: number
-  }
-  by_priority: Record<string, number>
+  pending: number
+  in_progress: number
+  completed: number
+  rejected: number
 }
 
 interface CategoryData {
@@ -54,12 +51,12 @@ export const useDashboardStore = defineStore('dashboard', {
       const auth = useAuthStore()
       
       try {
-        const response = await $fetch<{ by_category: CategoryData[] }>(`${config.public.apiBase}/dashboard/by-category/`, {
+        const response = await $fetch<Record<string, number>>(`${config.public.apiBase}/dashboard/by-category/`, {
           headers: {
             Authorization: `Bearer ${auth.accessToken}`,
           },
         })
-        this.byCategory = response.by_category
+        this.byCategory = Object.entries(response).map(([category, count]) => ({ category, count }))
       } catch (error) {
         console.error('Error fetching by category:', error)
       }
@@ -70,12 +67,12 @@ export const useDashboardStore = defineStore('dashboard', {
       const auth = useAuthStore()
       
       try {
-        const response = await $fetch<{ by_school: SchoolData[] }>(`${config.public.apiBase}/dashboard/by-school/`, {
+        const response = await $fetch<Record<string, number>>(`${config.public.apiBase}/dashboard/by-school/`, {
           headers: {
             Authorization: `Bearer ${auth.accessToken}`,
           },
         })
-        this.bySchool = response.by_school
+        this.bySchool = Object.entries(response).map(([school, count]) => ({ school, count }))
       } catch (error) {
         console.error('Error fetching by school:', error)
       }
