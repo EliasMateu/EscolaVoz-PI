@@ -63,5 +63,6 @@ export interface CreateDemandData {
   description: string
   category: string
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+  school?: string
   image?: File | null
 }

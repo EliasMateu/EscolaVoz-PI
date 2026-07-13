@@ -56,6 +56,9 @@ export const useDemandStore = defineStore('demands', {
         formData.append('description', data.description)
         formData.append('category', data.category)
         formData.append('priority', data.priority)
+        if (data.school) {
+          formData.append('school', data.school)
+        }
         if (data.image) {
           formData.append('image', data.image)
         }

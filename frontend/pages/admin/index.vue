@@ -16,17 +16,17 @@
       </div>
       
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg p-5">
-        <div class="text-2xl font-bold text-yellow-600">{{ stats.by_status?.pending ?? 0 }}</div>
+        <div class="text-2xl font-bold text-yellow-600">{{ stats.pending ?? 0 }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('pending') }}</div>
       </div>
       
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg p-5">
-        <div class="text-2xl font-bold text-blue-600">{{ stats.by_status?.in_progress ?? 0 }}</div>
+        <div class="text-2xl font-bold text-blue-600">{{ stats.in_progress ?? 0 }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('inProgress') }}</div>
       </div>
       
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg p-5">
-        <div class="text-2xl font-bold text-green-600">{{ stats.by_status?.completed ?? 0 }}</div>
+        <div class="text-2xl font-bold text-green-600">{{ stats.completed ?? 0 }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('completed') }}</div>
       </div>
     </div>
