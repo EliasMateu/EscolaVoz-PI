@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Demand
 from categories.serializers import CategorySerializer
 from schools.serializers import SchoolSerializer
+from schools.models import School
 
 
 class DemandSerializer(serializers.ModelSerializer):
@@ -30,23 +31,21 @@ class DemandSerializer(serializers.ModelSerializer):
 
 
 class DemandCreateSerializer(serializers.ModelSerializer):
+    school = serializers.PrimaryKeyRelatedField(
+        queryset=School.objects.all(),
+        required=False,
+        allow_null=True,
+    )
+
     class Meta:
         model = Demand
-        fields = ['title', 'description', 'category', 'priority', 'image']
+        fields = ['title', 'description', 'category', 'priority', 'image', 'school']
 
     def validate_priority(self, value):
         user = self.context['request'].user
         if user.role not in ['DIRECTORY', 'SEDUC']:
             return 'MEDIUM'
         return value
-
-    def create(self, validated_data):
-        user = self.context['request'].user
-        if user.role not in ['DIRECTORY', 'SEDUC']:
-            validated_data['priority'] = 'MEDIUM'
-        validated_data['school'] = self.context['request'].user.school
-        validated_data['created_by'] = self.context['request'].user
-        return super().create(validated_data)
 
 
 class DemandUpdateSerializer(serializers.ModelSerializer):

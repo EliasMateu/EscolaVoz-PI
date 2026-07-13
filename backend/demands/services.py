@@ -42,13 +42,22 @@ class DemandService:
         if user.role not in ['DIRECTORY', 'SEDUC']:
             priority = 'MEDIUM'
         
+        if user.role in ['DIRECTORY', 'SEDUC']:
+            school = data.get('school')
+            if not school:
+                raise DemandValidationException("Escola é obrigatória")
+        else:
+            school = user.school
+            if not school:
+                raise DemandValidationException("Usuário não vinculado a nenhuma escola")
+        
         return self.repository.create(
             title=data['title'],
             description=data.get('description', ''),
             category_id=data['category'].id if hasattr(data['category'], 'id') else data['category'],
             priority=priority,
             image=data.get('image'),
-            school=user.school,
+            school=school,
             created_by=user
         )
     
