@@ -1,14 +1,25 @@
 from rest_framework import viewsets, permissions
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 from schools.repositories import SchoolRepository
 from schools.serializers import SchoolSerializer
 
 
+class ReadOnlyOrAuthenticated(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        return request.user and request.user.is_authenticated
+
+
 class SchoolViewSet(viewsets.ModelViewSet):
     serializer_class = SchoolSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [ReadOnlyOrAuthenticated]
     repository = SchoolRepository()
 
     def get_queryset(self):
+        if self.request.method in SAFE_METHODS and not self.request.user.is_authenticated:
+            return self.repository.get_all()
+
         user = self.request.user
         
         if user.role in ['DIRECTORY', 'SEDUC']:
@@ -19,16 +30,8 @@ class SchoolViewSet(viewsets.ModelViewSet):
         
         return self.repository.get_all()
 
-    def create(self, request, *args, **kwargs):
-        if not request.user.role in ['SEDUC']:
-            from rest_framework.response import Response
-            from rest_framework import status
-            return Response(
-                {'error': 'Apenas SEDUC pode criar escolas'},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        school = self.repository.create(serializer.validated_data)
-        return Response(SchoolSerializer(school).data, status=status.HTTP_201_CREATED)
+    def perform_create(self, serializer):
+        if self.request.user.role not in ['SEDUC']:
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied('Apenas SEDUC pode criar escolas')
+        serializer.save()
